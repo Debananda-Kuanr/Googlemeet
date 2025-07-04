@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Meet</title>
+    <link rel="icon" type="image/png" href="icon.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+
+            padding: 13px;
+        }
+
+        .logo img {
+            width: 183px;
+            margin-left: 10px;
+            margin-top: 5px;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .lefttop {
+            display: flex;
+            align-items: center;
+        }
+
+        .righttop {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .righttop>div {
+            display: flex;
+            align-items: center;
+        }
+
+
+        #live-time,
+        #live-date {
+            color: #5f6368;
+            font-family: "Google Sans", Roboto, Arial, sans-serif;
+            font-size: 20px;
+            font-weight: 400;
+            text-decoration: none;
+        }
+
+        #live-time {
+            margin-right: 7px;
+        }
+
+        .righttop {
+            margin-right: 17px;
+        }
+
+        .meeting {
+            width: 39vw;
+            height: 87vh;
+            margin: 12px;
+
+        }
+
+        .advertisement {
+            width: 45vw;
+            height: 87vh;
+            margin: 12px;
+            padding-top: 108px;
+        }
+
+        .meeting {
+            padding: 168px 13px 0px 39px;
+        }
+
+        .new {
+            border: 1px solid rgb(0, 106, 255);
+            padding: 15px 14px;
+            border-radius: 79px;
+            background-color: rgb(0, 106, 255);
+            color: white;
+            font-weight: 200;
+            font-family: "Google Sans", Roboto, Arial, sans-serif;
+
+        }
+
+        .code>input {
+            padding: 12px 24px;
+            margin-left: 10px;
+            border: solid 3px gray;
+            border-radius: 10px;
+            color: #434242;
+            font-weight: 500;
+            font-family: "Google Sans", Roboto, Arial, sans-serif;
+            font-size: 17px;
+        }
+
+        .join {
+            margin-left: 19px;
+            font-size: 19px;
+            font-family: "Google Sans", Roboto, Arial, sans-serif;
+            font-size: 14px;
+            color: gray;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .meeting>h1 {
+            font-family: "Google Sans", Roboto, Arial, sans-serif;
+            font-size: 52px;
+            font-weight: 400;
+            letter-spacing: 0;
+            line-height: 3.25rem;
+            color: var(--gm3-sys-color-on-surface, #1f1f1f);
+            padding-bottom: .5rem;
+            margin: 0;
+        }
+
+        .meeting .content {
+            font-family: "Google Sans", Roboto, Arial, sans-serif;
+            font-size: 25px;
+            font-weight: 400;
+            letter-spacing: 0;
+            line-height: 1.75rem;
+            color: #444746cf;
+            max-width: 30rem;
+            padding-bottom: 2rem;
+            margin-top: 14px;
+        }
+
+        .about {
+            font-family: "Google Sans", Roboto, Arial, sans-serif;
+            font-size: 13px;
+            color: gray;
+        }
+
+
+        .carousel {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            text-align: center;
+            font-family: "Google Sans", Roboto, Arial, sans-serif;
+            padding: 30px;
+            box-sizing: border-box;
+        }
+
+        .slides {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slides.active {
+            display: flex;
+        }
+
+        .slides img {
+            width: 272px;
+            height: 272px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+
+        .slides h3 {
+            font-size: 30px;
+            margin-bottom: 10px;
+            color: #202124;
+            font-family: "Google Sans", Roboto, Arial, sans-serif;
+            font-weight: 400;
+            margin-top: 12px;
+        }
+
+        .slides p {
+            font-size: 18px;
+            color: #5f6368;
+            max-width: 80%;
+        }
+
+        .dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .dot {
+            height: 10px;
+            width: 10px;
+            margin: 0 5px;
+            background-color: #c4c4c4;
+            border-radius: 50%;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .dot.active {
+            background-color: #4285f4;
+        }
+
+        /* Add to your existing <style> tag */
+        .prev,
+        .next {
+            position: absolute;
+            top: 14%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            padding: 8px 16px;
+            background-color: rgb(131 131 131 / 10%);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            color: #333;
+            margin: 114px;
+            transition: background-color 0.3s ease;
+        }
+
+        .prev:hover,
+        .next:hover {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .slides img {
+                width: 180px;
+                height: 180px;
+            }
+
+            .slides h3 {
+                font-size: 20px;
+            }
+
+            .slides p {
+                font-size: 13px;
+            }
+        }
+
+        .new:hover{
+
+            background-color: rgb(4, 88, 205);
+            color: white;
+            border: 1px solid rgb(9, 88, 199);
+            cursor: pointer;
+        }
+
+        .code>input:hover{
+           border-color: rgb(67, 67, 255);
+        cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="lefttop">
+            <div class="logo">
+                <img src="googlelogo.png" alt="logo">
+            </div>
+        </div>
+
+        <div class="righttop">
+            <div class="datetime">
+                <span id="live-time"></span> &bull; <span id="live-date"></span>
+            </div>
+
+            <div class="support">
+                <button style="background: none; border: none; cursor: pointer; padding: 0;">
+                    <img src="support.png" alt="Support" style="width:39px; height:33px;">
+                </button>
+            </div>
+
+            <div class="report">
+                <button style="background: none; border: none; cursor: pointer; padding: 0;">
+                    <img src="report.png" alt="report" style="width:42px; height:42px;margin-top: 4px;">
+                </button>
+            </div>
+
+            <div class="setting">
+                <button style="background: none; border: none; cursor: pointer; padding: 0;">
+                    <img src="setting.png" alt="setting" style="width:38px; height:38px;">
+                </button>
+            </div>
+
+            <div class="apps">
+                <button style="background: none; border: none; cursor: pointer; padding: 0;">
+                    <img src="apps.png" alt="apps" style="width:35px; height:37px;">
+                </button>
+            </div>
+
+            <div class="profile">
+                <button style="background: none; border: none; cursor: pointer; padding: 0;">
+                    <img src="profie.png" alt="profile" style="width:35px; height:37px;">
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- now the time for body part -->
+
+    <div class="container">
+        <section class="meeting">
+
+            <h1>Video calls and meetings for everyone</h1>
+            <p class="content">Connect, collaborate, and celebrate from anywhere with Google Meet</p>
+
+            <span class="new"><big>+</big> New meeting</span>
+
+
+            <span class="code">
+                <input type="text" placeholder="Enter a code or link">
+            </span>
+            <span class="join">Join</span>
+            <br><br><br><br>
+            <hr>
+            <br>
+            <p class="about"><a href="#">Learn more</a> about Google Meet</p>
+        </section>
+        <section class="advertisement">
+            <div class="carousel">
+                <div class="slides active">
+                    <img src="pic1.png" alt="Slide 1">
+                    <h3>Your meeting is safe</h3>
+                    <p>No one can join a meeting unless invited or admitted by the host</p>
+                </div>
+                <div class="slides">
+                    <img src="pic2.png" alt="Slide 2">
+                    <h3>Works on any device</h3>
+                    <p>Join meetings from your phone, tablet, or computer</p>
+                </div>
+                <div class="slides">
+                    <img src="pic3.png" alt="Slide 3">
+                    <h3>Screen sharing made easy</h3>
+                    <p>Present your entire screen or just a window</p>
+                </div>
+
+                <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
+                <button class="next" onclick="changeSlide(1)">&#10095;</button>
+
+                <div class="dots">
+                    <span class="dot active" onclick="currentSlide(0)"></span>
+                    <span class="dot" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                </div>
+            </div>
+
+
+        </section>
+    </div>
+
+    <!-- this script is for live time and date -->
+    <script>
+        function updateDateTime() {
+            const now = new Date();
+            let hours = now.getHours();
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12 || 12;
+            const timeStr = `${hours}:${minutes}${ampm}`;
+            const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const dateStr = `${days[now.getDay()]}, ${months[now.getMonth()]} ${now.getDate()}`;
+            document.getElementById('live-time').textContent = timeStr;
+            document.getElementById('live-date').textContent = dateStr;
+        }
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+    </script>
+
+
+    <script>
+        let currentIndex = 0;
+        const slides = document.querySelectorAll(".slides");
+        const dots = document.querySelectorAll(".dot");
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove("active");
+                dots[i].classList.remove("active");
+            });
+            slides[index].classList.add("active");
+            dots[index].classList.add("active");
+            currentIndex = index;
+        }
+
+        function currentSlide(index) {
+            showSlide(index);
+        }
+
+        function changeSlide(direction) {
+            currentIndex += direction;
+            if (currentIndex >= slides.length) currentIndex = 0;
+            if (currentIndex < 0) currentIndex = slides.length - 1;
+            showSlide(currentIndex);
+        }
+
+    </script>
+
+</body>
+
+</html>
